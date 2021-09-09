@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class BookController {
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String getCars(Model model) {
-		return "Moi!";
+	public String getBook(Model model) {
+		return "/hello";
 	}
 
 }
