@@ -10,7 +10,7 @@ public class BookController {
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String getCars(Model model) {
-		return "Moi";
+		return "Moi!";
 	}
 
 }
