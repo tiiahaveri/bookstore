@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import swd20.Bookstore.domain.Book;
 import swd20.Bookstore.domain.BookstoreRepository;
+import swd20.Bookstore.domain.Category;
+import swd20.Bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	
 	
 	@Autowired
-	private BookstoreRepository repository;
+	private BookstoreRepository brepository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String getBook(Model model) {
@@ -26,31 +31,31 @@ public class BookController {
 	}
 	@RequestMapping(value= "/booklist")
 	public String bookList(Model model) {
-		model.addAttribute("books", repository.findAll());
+		model.addAttribute("books", brepository.findAll());
 				
 		return "booklist"; //html tiedoston nimi
 	}
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
 	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
-		repository.deleteById(bookId);
+		brepository.deleteById(bookId);
 		return "redirect:../booklist";
 		
 	}
 	//Lisäyslomake
-	@RequestMapping(value="/add")
+	@RequestMapping(value="/addnewbook")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
 		return "addbook";
 	}
-	@RequestMapping(value="/save", method =RequestMethod.POST)
-	public String save(Book book) {
-		repository.save(book);
+	@RequestMapping(value="/savebook", method =RequestMethod.POST)
+	public String saveBook(Book book) {
+		brepository.save(book);
 		return "redirect:booklist";
 		
 	}
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("book", repository.findById(id).get());		
+		model.addAttribute("book", brepository.findById(id).get());		
 		return "updatebook";
 	}
 	
@@ -60,10 +65,28 @@ public class BookController {
 		book.setId(id);		
 		return "updatebook";
 		}
-		repository.save(book);
+		brepository.save(book);
 		return "redirect: booklist";
 		}
+	@RequestMapping(value= "/categorylist")
+	public String categoryList(Model model) {
+		model.addAttribute("categories", crepository.findAll());
+		
+		return "categorylist";
 	
 }
+	@RequestMapping(value="/addnewcategory")
+	public String addCategory(Model model) {
+		model.addAttribute("category", new Category());
+		return "addcategory";
+	}
 
+@RequestMapping(value="/savecategory", method =RequestMethod.POST)
+public String saveCategory(Category category) {
+	crepository.save(category);
+	
+	
+	return "redirect:categorylist";
+}
 
+}

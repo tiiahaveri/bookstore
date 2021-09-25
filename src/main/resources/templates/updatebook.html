@@ -8,7 +8,7 @@
 <h1>Update book</h1>
 <div>
 
-<form action ="#" th:action= "@{/save}" th:object="${book}" method="post">
+<form action ="#" th:action= "@{/savebook}" th:object="${book}" method="post">
 
 		<label for="id">ID </label>
 		<input type="hidden" id="id" name="id "th:field="*{id}" value="1" readonly="readonly"/>"
