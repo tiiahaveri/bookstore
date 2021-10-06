@@ -29,15 +29,15 @@ public class BookstoreApplication {
 		return(args) -> {
 			log.info("Tallennetaan uusia kategorioita");
 			Category c1= new Category("Scifi");
-			Category c2= new Category("Fiction");
-			Category c3= new Category("Comic");
+			Category c2= new Category("Dekkari");
+			Category c3= new Category("Historia");
 			
 			categoryrepository.save(c1);
 			categoryrepository.save(c2);
 			categoryrepository.save(c3);
 			
 			log.info("Tallennetaan kirjoja");
-			Book b1 = new Book("Aapinen", "Keijo Kirjailija", 1990, "123-456", 20.40, c1);
+			Book b1 = new Book("Aapinen", "Keijo Kirjailija", 1990, "123-456", 20.40, c2);
 			Book b2= new Book("Puppe menee kouluun", "Maija Mehiläinen", 2000, "5424-754", 15.30, c3);
 			bookstoreRepository.save(b1);
 			bookstoreRepository.save(b2);
@@ -58,5 +58,4 @@ public class BookstoreApplication {
 			
 		
 	}
-
 

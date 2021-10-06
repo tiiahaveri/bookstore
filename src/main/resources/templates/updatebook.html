@@ -33,6 +33,11 @@
 		<input type="text" th:field="*{price}" id="price" placeholder="Price">
 		<span th:if="${#fields.hasErrors('price')}" th:errors ="*{price}"></span>
 		
+		<label for="catlist">Category</label>
+			 <select id="catlist" th:field="*{category}" class="form-control">
+       			<option th:each="categ: ${categories}" th:value="${categ.category}" th:text="${categ.name}"></option>
+    		</select>
+		
 		<input type="submit" value="Update book">
 		
 		
