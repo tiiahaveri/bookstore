@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,12 +33,15 @@ public class BookController {
 	
 
 	
+    
 	@RequestMapping(value= "/booklist")
 	public String bookList(Model model) {
 		model.addAttribute("books", brepository.findAll());
 				
 		return "booklist"; //html tiedoston nimi
 	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
 	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 		brepository.deleteById(bookId);
@@ -91,18 +96,25 @@ public String saveCategory(Category category) {
 	
 	return "redirect:categorylist";
 }
-//RESTful service to get all students
-// Java-kielinen Student-luokan oliolista muunnetaan JSON-opiskelijalistaksi ja 
-// lähetetään web-selaimelle vastauksena
-@RequestMapping(value="/books", method = RequestMethod.GET)
-public @ResponseBody List<Book> bookListRest() {	
+	//RESTful service to get all students
+	// Java-kielinen Student-luokan oliolista muunnetaan JSON-opiskelijalistaksi ja 
+	// lähetetään web-selaimelle vastauksena
+	@RequestMapping(value="/books", method = RequestMethod.GET)
+	public @ResponseBody List<Book> bookListRest() {	
     return (List<Book>) brepository.findAll();
-    
 }    
-//RESTful service to get book by id
-		@RequestMapping(value="/books/{id}", method = RequestMethod.GET)
-		public @ResponseBody Optional<Book> findStudentRest(@PathVariable("id") Long bookId) {	
-		return brepository.findById(bookId);
+
+// RESTful service to get student by id
+@RequestMapping(value="/books/{id}", method = RequestMethod.GET)
+public @ResponseBody Optional<Book> findBookRest(@PathVariable("id") Long studentId) {	
+	return brepository.findById(studentId);
+}      
+
+// RESTful service to save new student
+@RequestMapping(value="/books", method = RequestMethod.POST)
+public @ResponseBody Book saveBookRest(@RequestBody Book book) {	
+	return brepository.save(book);
 }
+
 
 }
