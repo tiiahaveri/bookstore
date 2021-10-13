@@ -16,6 +16,8 @@ import swd20.Bookstore.domain.Book;
 import swd20.Bookstore.domain.BookstoreRepository;
 import swd20.Bookstore.domain.Category;
 import swd20.Bookstore.domain.CategoryRepository;
+import swd20.Bookstore.domain.User;
+import swd20.Bookstore.domain.UserRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -27,7 +29,7 @@ public class BookstoreApplication {
 	
 	}
 	@Bean
-	public CommandLineRunner demo(BookstoreRepository bookstoreRepository, CategoryRepository categoryrepository) {
+	public CommandLineRunner demo(BookstoreRepository bookstoreRepository, CategoryRepository categoryrepository, UserRepository userRepository) {
 		return(args) -> {
 			log.info("Tallennetaan uusia kategorioita");
 			Category c1= new Category("Scifi");
@@ -39,10 +41,10 @@ public class BookstoreApplication {
 			categoryrepository.save(c3);
 			
 			
-		/*	User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
+			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
 			User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
-			userrepository.save(user1);
-			userrepository.save(user2);*/
+			userRepository.save(user1);
+			userRepository.save(user2);
 			
 			log.info("Tallennetaan kirjoja");
 			Book b1 = new Book("Aapinen", "Keijo Kirjailija", 1990, "123-456", 20.40, c2);
